@@ -1,0 +1,24 @@
+{
+  "recommendations": [
+    "christian-kohler.npm-intellisense",
+    "CoenraadS.bracket-pair-colorizer",
+    "dariofuzinato.vue-peek",
+    "eamodio.gitlens",
+    "esbenp.prettier-vscode",
+    "fabianlauer.vs-code-xml-format",
+    "gencer.html-slim-scss-css-class-completion",
+    "hangxingliu.vscode-nginx-conf-hint",
+    "infeng.vscode-react-typescript",
+    "jpoissonnier.vscode-styled-components",
+    "midnightsyntax.vscode-wrap-console-log",
+    "mrmlnc.vscode-stylefmt",
+    "ms-azuretools.vscode-docker",
+    "msjsdiag.debugger-for-chrome",
+    "octref.vetur",
+    "shanoor.vscode-nginx",
+    "slevesque.vscode-multiclip",
+    "vincaslt.highlight-matching-tag",
+    "vscode-icons-team.vscode-icons",
+    "orta.vscode-jest"
+  ]
+}
