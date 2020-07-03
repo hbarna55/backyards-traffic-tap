@@ -12,6 +12,19 @@ function webpackdevserver() {
       ca: fs.readFileSync(path.resolve(__dirname, "certificates/cert.pem")),
     },
     historyApiFallback: true,
+    proxy: {
+      "/api/**": {
+        target: "http://127.0.0.1:50500",
+        secure: true,
+        changeOrigin: true,
+        ws: true,
+        headers: {
+          Host: "127.0.0.1:50500",
+          Referer: "http://127.0.0.1:50500",
+          Origin: "http://127.0.0.1:50500",
+        },
+      },
+    },
   }
 }
 
