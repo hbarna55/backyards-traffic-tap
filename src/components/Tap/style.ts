@@ -15,6 +15,11 @@ export const StyledTap = styled.div`
     grid-column: 1 / 4;
     grid-row: 1;
   }
+  .button {
+    grid-column: 3 / 3;
+    grid-row: 1;
+    text-align: end;
+  }
   .table {
     grid-column: 1 / 4;
     grid-row: 2;

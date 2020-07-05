@@ -4,6 +4,7 @@ export const subscribeAccessLogsGQL = gql`
   subscription accessLogs($input: AccessLogsInput) {
     accessLogs(input: $input) {
       direction
+      startTime
       source {
         name
         namespace
