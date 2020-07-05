@@ -40,3 +40,9 @@ type IstioNamespace = {
     name: string;
   }[];
 };
+type IstioWorkload = {
+  workloads: {
+    id: string;
+    name: string;
+  }[];
+};

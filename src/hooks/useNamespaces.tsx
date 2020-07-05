@@ -1,24 +1,14 @@
 import { useLazyQuery } from "@apollo/react-hooks";
 import { getNamespacesGQL } from "api/getNamespaces";
-import { useEffect, useRef } from "react";
+import usePolling from "hooks/usePolling";
 
 const useNamespaces = () => {
-  const polling = useRef<any>();
   const [getNamespaces, { data: namespaces }] = useLazyQuery<IstioNamespace>(getNamespacesGQL, {
     variables: {},
     fetchPolicy: "network-only",
   });
 
-  useEffect(() => {
-    getNamespaces();
-    polling.current = setInterval(() => {
-      getNamespaces();
-    }, 5000);
-
-    return () => {
-      clearInterval(polling.current);
-    };
-  }, [getNamespaces]);
+  usePolling(getNamespaces);
 
   return { namespaces };
 };

@@ -1,6 +1,7 @@
 import HTTPAccessLogEntryVM from "api/viewModels/HTTPAccessLogEntryVM";
 import useAccessLogsSubscription from "hooks/useAccessLogsSubscription";
 import useNamespaces from "hooks/useNamespaces";
+import useWorkloads from "hooks/useWorkloads";
 import React, { useCallback, useState } from "react";
 import Details from "./components/Details/Details";
 import Filter from "./components/Filter/Filter";
@@ -11,6 +12,7 @@ const Tap = () => {
   const [accessLogForDetails, _setAccessLogForDetails] = useState<HTTPAccessLogEntryVM | null>(null);
 
   const { namespaces } = useNamespaces();
+  const { workloads } = useWorkloads();
   const { accessLogs, error, isStreaming, setFilters } = useAccessLogsSubscription();
 
   const setAccessLogForDetails = useCallback(
@@ -31,7 +33,7 @@ const Tap = () => {
   return (
     <StyledTap>
       <div className="filter">
-        <Filter namespaces={namespaces} setFilters={setFilters} />
+        <Filter namespaces={namespaces} workloads={workloads} setFilters={setFilters} />
       </div>
       <div className="button">
         <button onClick={toggleStreaming}>Start</button>
