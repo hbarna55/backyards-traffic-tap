@@ -25,7 +25,7 @@ const TextField = ({
   overRideValue,
   handleChange,
 }: OwnProps) => {
-  const { value, setValue } = useRefState(register!, name, overRideValue);
+  const { value, setValue } = useRefState(register!, name, "", overRideValue);
 
   return (
     <div>
