@@ -1,6 +1,6 @@
 import { ApolloConsumer, useSubscription } from "@apollo/react-hooks";
 import { subscribeAccessLogsGQL } from "api/subscribeAccessLogs";
-import React from "react";
+import React, { useState } from "react";
 import ApolloClients from "utils/ApolloClients";
 
 export interface HelloProps {
@@ -9,8 +9,10 @@ export interface HelloProps {
 }
 
 const TodoPublicListSubscription = () => {
+  const [l, setL] = useState("POST");
+
   const { loading, error, data } = useSubscription(subscribeAccessLogsGQL, {
-    variables: { input: {} },
+    variables: { input: { method: l } },
     client: ApolloClients.getWssClient(),
     shouldResubscribe: true,
     onSubscriptionData: ({ subscriptionData }) => {
@@ -25,7 +27,12 @@ const TodoPublicListSubscription = () => {
   if (error) {
     return <span>Error</span>;
   }
-  return <div>{data ? JSON.stringify(data) : null}</div>;
+  return (
+    <div>
+      <div>{data ? JSON.stringify(data) : null}</div>
+      <button onClick={() => setL("GET")}>ba</button>
+    </div>
+  );
 };
 
 export const Hello = (props: HelloProps) => {
