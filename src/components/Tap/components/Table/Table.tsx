@@ -1,6 +1,6 @@
+import HTTPAccessLogEntryVM from "api/viewModels/HTTPAccessLogEntryVM";
 import { ApolloError } from "apollo-boost";
 import React from "react";
-import HTTPAccessLogEntryVM from "../../viewModels/HTTPAccessLogEntryVM";
 
 type Props = {
   accessLogs: HTTPAccessLogEntryVM[];

@@ -1,29 +1,17 @@
-import { useSubscription } from "@apollo/react-hooks";
-import { subscribeAccessLogsGQL } from "api/subscribeAccessLogs";
-import React, { useCallback, useRef, useState } from "react";
-import ApolloClients from "utils/ApolloClients";
+import HTTPAccessLogEntryVM from "api/viewModels/HTTPAccessLogEntryVM";
+import useAccessLogsSubscription from "hooks/useAccessLogsSubscription";
+import useNamespaces from "hooks/useNamespaces";
+import React, { useCallback, useState } from "react";
 import Details from "./components/Details/Details";
 import Filter from "./components/Filter/Filter";
 import Table from "./components/Table/Table";
 import { StyledTap } from "./style";
-import HTTPAccessLogEntryVM from "./viewModels/HTTPAccessLogEntryVM";
 
 const Tap = () => {
-  const [accessLogs, setAccessLogs] = useState<HTTPAccessLogEntryVM[]>([]);
   const [accessLogForDetails, _setAccessLogForDetails] = useState<HTTPAccessLogEntryVM | null>(null);
-  const [filters, setFilters] = useState<AccessLogsInput>({});
-  const isStreaming = useRef(false);
 
-  const { error } = useSubscription<HTTPAccessLogs>(subscribeAccessLogsGQL, {
-    variables: { input: filters },
-    client: ApolloClients.getWssClient(),
-    shouldResubscribe: true,
-    onSubscriptionData: ({ subscriptionData }) => {
-      if (subscriptionData.error) console.log(subscriptionData.error);
-      if (!subscriptionData.data) return;
-      isStreaming.current && setAccessLogs([new HTTPAccessLogEntryVM(subscriptionData.data.accessLogs), ...accessLogs]);
-    },
-  });
+  const { namespaces } = useNamespaces();
+  const { accessLogs, error, isStreaming, setFilters } = useAccessLogsSubscription();
 
   const setAccessLogForDetails = useCallback(
     (accessLog: HTTPAccessLogEntryVM) => {
@@ -43,7 +31,7 @@ const Tap = () => {
   return (
     <StyledTap>
       <div className="filter">
-        <Filter setFilters={setFilters} />
+        <Filter namespaces={namespaces} setFilters={setFilters} />
       </div>
       <div className="button">
         <button onClick={toggleStreaming}>Start</button>

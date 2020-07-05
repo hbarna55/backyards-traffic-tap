@@ -33,3 +33,10 @@ declare type HTTPAccessLogEntry = {
 declare type HTTPAccessLogs = {
   accessLogs: HTTPAccessLogEntry;
 };
+
+type IstioNamespace = {
+  namespaces: {
+    id: string;
+    name: string;
+  }[];
+};

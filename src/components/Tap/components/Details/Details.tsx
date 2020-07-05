@@ -1,5 +1,5 @@
+import HTTPAccessLogEntryVM from "api/viewModels/HTTPAccessLogEntryVM";
 import React from "react";
-import HTTPAccessLogEntryVM from "../../viewModels/HTTPAccessLogEntryVM";
 
 type Props = {
   accessLog: HTTPAccessLogEntryVM;

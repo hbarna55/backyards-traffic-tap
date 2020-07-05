@@ -12,7 +12,7 @@ const Index = () => {
 
   useEffect(() => {
     testLogin();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [testLogin]);
 
   return (
     <div>
