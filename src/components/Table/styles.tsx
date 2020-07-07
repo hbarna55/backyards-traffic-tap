@@ -13,28 +13,26 @@ export default styled.div`
     table {
       position: relative;
       width: 100%;
-      border-spacing: 0 5px;
+      border-spacing: 0;
       border-collapse: separate;
       color: ${colors.grayDark};
       margin-top: -5px;
 
-      thead tr th {
-        position: sticky;
-        background-color: ${colors.grayLight};
-        padding: 5px;
+      thead {
+        tr th {
+          border-bottom: solid 4px ${colors.gray};
+          position: sticky;
+          top: -5px;
+          background-color: ${colors.white};
+          padding: 5px;
+        }
       }
 
       tbody tr {
-        background-color: #fff;
-
-        :last-child {
-          td:before {
-            border-bottom: 0;
-          }
-        }
+        background-color: ${colors.white};
 
         :hover {
-          box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.4);
+          background-color: ${colors.grayLight};
         }
       }
 
@@ -69,8 +67,7 @@ export default styled.div`
 
           .th-title {
             font-weight: 700;
-            min-height: ${constants.trHeight};
-            padding: 1rem;
+            padding: 0.2rem;
             span {
               position: absolute;
               right: 5px;
@@ -81,10 +78,9 @@ export default styled.div`
             margin-right: 5px;
 
             input {
-              height: 2rem;
+              height: 1rem;
               border: 0px;
               width: 100%;
-              padding: 1rem;
             }
           }
           &.empty:after {
@@ -95,7 +91,11 @@ export default styled.div`
       }
 
       td {
+        border-bottom: solid 1px ${colors.gray};
         position: relative;
+        margin: 0;
+        padding: 0;
+
         :before {
           content: "";
           height: 100%;
@@ -106,6 +106,7 @@ export default styled.div`
           z-index: -1;
         }
         .cell {
+          padding: 0.3rem;
           white-space: nowrap;
           i {
             font-size: 0.9rem;
@@ -123,16 +124,6 @@ export default styled.div`
             display: flex;
             justify-content: flex-end;
           }
-        }
-      }
-
-      td {
-        margin: 0;
-        padding: 0;
-
-        .cell {
-          min-height: ${constants.trHeight};
-          padding: 1rem;
         }
       }
     }

@@ -10,7 +10,7 @@ type Props = {
   error: ApolloError | undefined;
 };
 
-const Table = ({ accessLogs /*, setAccessLogForDetails*/, error }: Props) => {
+const Table = ({ accessLogs, setAccessLogForDetails, error }: Props) => {
   const columns: Array<Column<HTTPAccessLogEntryM>> = React.useMemo(
     () => [
       { Header: "Direction", accessor: (a: HTTPAccessLogEntryM) => a.direction },
@@ -29,6 +29,7 @@ const Table = ({ accessLogs /*, setAccessLogForDetails*/, error }: Props) => {
     <div>
       {!error && <TableComponent columns={columns} data={accessLogs} isLoading={false} />}
       {error && <div>error</div>}
+      <button onClick={() => setAccessLogForDetails(accessLogs[0])}>button</button>
     </div>
   );
 };

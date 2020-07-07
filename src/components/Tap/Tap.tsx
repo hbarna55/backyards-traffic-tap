@@ -31,7 +31,7 @@ const Tap = () => {
   }, [isStreaming]);
 
   return (
-    <StyledTap>
+    <StyledTap idDetailsShown={!!accessLogForDetails}>
       <div className="filter-container">
         {/* <Filter namespaces={namespaces} workloads={workloads} setFilters={setFilters} /> */}
       </div>
@@ -41,11 +41,9 @@ const Tap = () => {
       <div className="table-container">
         <Table accessLogs={accessLogs} setAccessLogForDetails={setAccessLogForDetails} error={error} />
       </div>
-      {accessLogForDetails && (
-        <div className="details-container">
-          <Details accessLog={accessLogForDetails} />
-        </div>
-      )}
+      <div className="details-container">
+        <Details accessLog={accessLogForDetails} />
+      </div>
     </StyledTap>
   );
 };
