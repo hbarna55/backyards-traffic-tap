@@ -1,6 +1,6 @@
 import { useSubscription } from "@apollo/react-hooks";
+import HTTPAccessLogEntryVM from "api/models/HTTPAccessLogEntryVM";
 import { subscribeAccessLogsGQL } from "api/subscribeAccessLogs";
-import HTTPAccessLogEntryVM from "api/viewModels/HTTPAccessLogEntryVM";
 import { useRef, useState } from "react";
 import ApolloClients from "utils/ApolloClients";
 

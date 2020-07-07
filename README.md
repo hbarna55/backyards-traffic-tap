@@ -6,7 +6,7 @@ First build
 
 ### `npm install`
 
-### `npm run cert:gen` in Admin terminal/cmd
+### `npm run cert:gen` in Admin terminal/cmd/PowerShell
 
 In the project directory, you can run:
 

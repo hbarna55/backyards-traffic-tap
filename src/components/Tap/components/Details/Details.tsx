@@ -1,4 +1,4 @@
-import HTTPAccessLogEntryVM from "api/viewModels/HTTPAccessLogEntryVM";
+import HTTPAccessLogEntryVM from "api/models/HTTPAccessLogEntryVM";
 import React from "react";
 
 type Props = {

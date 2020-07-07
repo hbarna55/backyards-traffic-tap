@@ -1,4 +1,4 @@
-import HTTPAccessLogEntryVM from "api/viewModels/HTTPAccessLogEntryVM";
+import HTTPAccessLogEntryVM from "api/models/HTTPAccessLogEntryVM";
 import useAccessLogsSubscription from "hooks/useAccessLogsSubscription";
 import useNamespaces from "hooks/useNamespaces";
 import useWorkloads from "hooks/useWorkloads";

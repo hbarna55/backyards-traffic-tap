@@ -1,4 +1,4 @@
-import HTTPAccessLogEntryVM from "api/viewModels/HTTPAccessLogEntryVM";
+import HTTPAccessLogEntryVM from "api/models/HTTPAccessLogEntryVM";
 import { ApolloError } from "apollo-boost";
 import React from "react";
 
