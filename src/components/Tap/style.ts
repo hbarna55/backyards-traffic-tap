@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+const filterHeight = "7rem";
 export const StyledTap = styled.div`
   position: absolute;
   top: 0;
@@ -7,25 +8,46 @@ export const StyledTap = styled.div`
   left: 0;
   right: 0;
 
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 60px 1fr;
+  .filter-container {
+    height: ${filterHeight};
+  }
 
-  .filter {
-    grid-column: 1 / 4;
-    grid-row: 1;
+  .button-container {
+    position: absolute;
+    top: 0;
+    right: 0;
   }
-  .button {
-    grid-column: 3 / 3;
-    grid-row: 1;
-    text-align: end;
+
+  .table-container,
+  .details-container {
+    transition: width 0.5s;
+    position: absolute;
+    top: ${filterHeight};
+    bottom: 0;
+    right: 0;
   }
-  .table {
-    grid-column: 1 / 4;
-    grid-row: 2;
+  .table-container {
+    width: 100%;
+    left: 0;
+    overflow: auto;
   }
-  .details {
-    grid-column: 3 / 3;
-    grid-row: 2;
+
+  .details-container {
+    overflow: hidden;
+    width: 0%;
+    border: none;
+
+    div {
+      width: 33vw;
+    }
+  }
+
+  &:hover {
+    .details-container {
+      width: 33vw;
+    }
+    .table-container {
+      width: calc(100% - 33vw);
+    }
   }
 `;

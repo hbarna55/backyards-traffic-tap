@@ -1,4 +1,4 @@
-class HTTPAccessLogEntryVM {
+class HTTPAccessLogEntryM {
   id: string;
   direction: string;
   source: RequestEndpoint;
@@ -7,7 +7,6 @@ class HTTPAccessLogEntryVM {
   latency: string;
   request: HTTPRequest;
   response: HTTPResponse;
-  startTime: Date;
 
   constructor(httpAccessLogEntry: HTTPAccessLogEntry) {
     this.direction = httpAccessLogEntry.direction;
@@ -17,10 +16,10 @@ class HTTPAccessLogEntryVM {
     this.latency = httpAccessLogEntry.latency;
     this.request = httpAccessLogEntry.request;
     this.response = httpAccessLogEntry.response;
-    this.startTime = new Date(httpAccessLogEntry.startTime);
-    this.id = this.startTime.getTime() + this.latency;
+    this.id = this.request.id;
   }
-  equals(httpAccessLogEntry: HTTPAccessLogEntryVM | null) {
+
+  equals(httpAccessLogEntry: HTTPAccessLogEntryM | null) {
     if (!httpAccessLogEntry) {
       return false;
     }
@@ -28,4 +27,4 @@ class HTTPAccessLogEntryVM {
   }
 }
 
-export default HTTPAccessLogEntryVM;
+export default HTTPAccessLogEntryM;

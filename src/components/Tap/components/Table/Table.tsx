@@ -1,25 +1,33 @@
-import HTTPAccessLogEntryVM from "api/models/HTTPAccessLogEntryVM";
+import HTTPAccessLogEntryM from "api/models/HTTPAccessLogEntryM";
 import { ApolloError } from "apollo-boost";
+import TableComponent from "components/Table/Table";
+import { Column } from "components/Table/types";
 import React from "react";
 
 type Props = {
-  accessLogs: HTTPAccessLogEntryVM[];
-  setAccessLogForDetails: (accessLog: HTTPAccessLogEntryVM) => void;
+  accessLogs: HTTPAccessLogEntryM[];
+  setAccessLogForDetails: (accessLog: HTTPAccessLogEntryM) => void;
   error: ApolloError | undefined;
 };
 
-const Table = ({ accessLogs, setAccessLogForDetails, error }: Props) => {
+const Table = ({ accessLogs /*, setAccessLogForDetails*/, error }: Props) => {
+  const columns: Array<Column<HTTPAccessLogEntryM>> = React.useMemo(
+    () => [
+      { Header: "Direction", accessor: (a: HTTPAccessLogEntryM) => a.direction },
+      { Header: "Source", accessor: (a: HTTPAccessLogEntryM) => a.source.name },
+      { Header: "Destination", accessor: (a: HTTPAccessLogEntryM) => a.destination.name },
+      { Header: "Scheme", accessor: (a: HTTPAccessLogEntryM) => a.request.scheme },
+      { Header: "Method", accessor: (a: HTTPAccessLogEntryM) => a.request.method },
+      { Header: "Path", accessor: (a: HTTPAccessLogEntryM) => a.request.path },
+      { Header: "Latency", accessor: (a: HTTPAccessLogEntryM) => a.latency },
+      { Header: "HTTP status", accessor: (a: HTTPAccessLogEntryM) => a.response.statusCode },
+    ],
+    [],
+  );
+
   return (
     <div>
-      {!error && (
-        <div>
-          {accessLogs.map((accessLog) => (
-            <span key={accessLog.id} onClick={() => setAccessLogForDetails(accessLog)}>
-              {accessLog.request.method}
-            </span>
-          ))}
-        </div>
-      )}
+      {!error && <TableComponent columns={columns} data={accessLogs} isLoading={false} />}
       {error && <div>error</div>}
     </div>
   );

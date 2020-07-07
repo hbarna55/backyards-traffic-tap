@@ -1,8 +1,8 @@
-import HTTPAccessLogEntryVM from "api/models/HTTPAccessLogEntryVM";
+import HTTPAccessLogEntryM from "api/models/HTTPAccessLogEntryM";
 import React from "react";
 
 type Props = {
-  accessLog: HTTPAccessLogEntryVM;
+  accessLog: HTTPAccessLogEntryM;
 };
 
 const Details = ({ accessLog }: Props) => {

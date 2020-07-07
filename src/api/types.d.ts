@@ -10,9 +10,10 @@ type RequestEndpoint = {
 };
 
 type HTTPRequest = {
-  method: !String;
-  scheme: !String;
-  path: !String;
+  id: string;
+  method: string;
+  scheme: string;
+  path: string;
 };
 
 type HTTPResponse = {
