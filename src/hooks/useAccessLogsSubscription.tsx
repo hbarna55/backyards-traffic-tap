@@ -98,7 +98,11 @@ const useAccessLogsSubscription = () => {
     onSubscriptionData: ({ subscriptionData }) => {
       if (subscriptionData.error) console.log(subscriptionData.error);
       if (!subscriptionData.data) return;
-      isStreaming.current && setAccessLogs([new HTTPAccessLogEntryM(subscriptionData.data.accessLogs), ...accessLogs]);
+      if (isStreaming.current) {
+        const newAccessLogs = [new HTTPAccessLogEntryM(subscriptionData.data.accessLogs), ...accessLogs];
+        newAccessLogs.length > 50 && newAccessLogs.pop();
+        setAccessLogs(newAccessLogs);
+      }
     },
   });
 
