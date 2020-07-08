@@ -35,7 +35,6 @@ export const StyledTap = styled.div<Props>`
   }
   .table-container {
     top: calc(${filterHeight} + 1px);
-    padding-top: 12px;
     left: 0;
     overflow: auto;
     width: ${({ idDetailsShown }) => (idDetailsShown ? "calc(100% - 33vw)" : "100%")};

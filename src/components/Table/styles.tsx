@@ -25,6 +25,7 @@ export default styled.div`
           top: -5px;
           background-color: ${colors.white};
           padding: 5px;
+          padding-top: 17px;
         }
       }
 
