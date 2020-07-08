@@ -1,31 +1,27 @@
 import React, { Fragment } from "react";
-import { Row } from "react-table";
+import { Cell, Row } from "react-table";
 
-type Props = {
-  rows: Row<{}>[];
+type Props<T extends {}> = {
+  rows: Row<T>[];
   getTableBodyProps: (props?: object) => object;
-  prepareRow: (row: Row<{}>) => void;
+  prepareRow: (row: Row<T>) => void;
+  rowCallback?: (row: T) => void;
 };
 
-const TBody = ({ rows, getTableBodyProps, prepareRow }: Props) => {
+const TBody = <T extends {}>({ rows, getTableBodyProps, prepareRow, rowCallback }: Props<T>) => {
   return (
     <tbody {...getTableBodyProps()}>
-      {rows.map((row: any) => {
+      {rows.map((row: Row<T>) => {
         prepareRow(row);
         return (
           <Fragment key={row.index}>
-            <tr {...row.getRowProps()}>
-              {row.cells.map((cell: any) => {
-                const CellFormat = cell.column.CellFormat ? cell.column.CellFormat : <div></div>;
+            <tr {...row.getRowProps()} onClick={() => rowCallback && rowCallback(row.original)}>
+              {row.cells.map((cell: Cell<T>) => {
                 const cellValue = cell.value === null || typeof cell.value === "undefined" ? "" : cell.value;
 
                 return (
                   <td {...cell.getCellProps()}>
-                    <div className="body cell">
-                      {cell.column.CellFormat
-                        ? cell.render(<CellFormat {...{ cell, row }} column={cell.column} />)
-                        : cellValue}
-                    </div>
+                    <div className="body cell">{cellValue}</div>
                   </td>
                 );
               })}

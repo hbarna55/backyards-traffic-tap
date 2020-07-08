@@ -29,6 +29,7 @@ export default styled.div`
       }
 
       tbody tr {
+        cursor: pointer;
         background-color: ${colors.white};
 
         :hover {

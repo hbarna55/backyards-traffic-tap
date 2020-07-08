@@ -3,13 +3,13 @@ import { ColumnInstance, Row } from "react-table";
 import styled from "styled-components";
 import constants from "../constants";
 
-type Props = {
-  rows: Row<{}>[];
-  flatColumns: ColumnInstance<{}>[];
+type Props<T extends {}> = {
+  rows: Row<T>[];
+  flatColumns: ColumnInstance<T>[];
   isLoading: boolean;
 };
 
-const NoData = ({ flatColumns, rows, isLoading }: Props) => {
+const NoData = <T extends {}>({ flatColumns, rows, isLoading }: Props<T>) => {
   return rows.length === 0 ? (
     <tfoot>
       <tr>
