@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "theme/colors";
 
 const filterHeight = "7rem";
 
@@ -15,6 +16,7 @@ export const StyledTap = styled.div<Props>`
 
   .filter-container {
     height: ${filterHeight};
+    border-bottom: solid 1px ${colors.grayDark};
   }
 
   .button-container {
@@ -32,6 +34,8 @@ export const StyledTap = styled.div<Props>`
     right: 0;
   }
   .table-container {
+    top: calc(${filterHeight} + 1px);
+    padding-top: 12px;
     left: 0;
     overflow: auto;
     width: ${({ idDetailsShown }) => (idDetailsShown ? "calc(100% - 33vw)" : "100%")};
@@ -43,7 +47,7 @@ export const StyledTap = styled.div<Props>`
     width: ${({ idDetailsShown }) => (idDetailsShown ? "33vw" : "0%")};
     border: none;
 
-    div {
+    & > div {
       width: 33vw;
     }
   }

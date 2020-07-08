@@ -107,6 +107,7 @@ export default styled.div`
           z-index: -1;
         }
         .cell {
+          font-size: 80%;
           padding: 0.3rem;
           white-space: nowrap;
           i {

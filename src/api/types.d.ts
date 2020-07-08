@@ -2,15 +2,22 @@ declare type AccessLogsInput = {
   method?: "GET" | "POST" | "PUT";
 };
 
+type TCPAddr = {
+  ip: string;
+  port: number;
+};
+
 type RequestEndpoint = {
   name: string;
   namespace: string;
   workload: string;
   serviceAccount: string;
+  address: TCPAddr;
 };
 
 type HTTPRequest = {
   id: string;
+  authority: string;
   method: string;
   scheme: string;
   path: string;

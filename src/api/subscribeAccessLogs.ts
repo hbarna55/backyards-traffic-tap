@@ -9,17 +9,26 @@ export const subscribeAccessLogsGQL = gql`
         namespace
         workload
         serviceAccount
+        address {
+          ip
+          port
+        }
       }
       destination {
         name
         namespace
         workload
         serviceAccount
+        address {
+          ip
+          port
+        }
       }
       protocolVersion
       latency
       request {
         id
+        authority
         method
         scheme
         path

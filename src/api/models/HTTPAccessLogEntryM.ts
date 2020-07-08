@@ -1,6 +1,11 @@
+export enum AccessLogsDirection {
+  inbound = "inbound",
+  outbound = "outbound",
+}
+
 class HTTPAccessLogEntryM {
   id: string;
-  direction: string;
+  direction: AccessLogsDirection;
   source: RequestEndpoint;
   destination: RequestEndpoint;
   protocolVersion: string;
@@ -9,7 +14,7 @@ class HTTPAccessLogEntryM {
   response: HTTPResponse;
 
   constructor(httpAccessLogEntry: HTTPAccessLogEntry) {
-    this.direction = httpAccessLogEntry.direction;
+    this.direction = AccessLogsDirection[httpAccessLogEntry.direction as AccessLogsDirection];
     this.source = httpAccessLogEntry.source;
     this.destination = httpAccessLogEntry.destination;
     this.protocolVersion = httpAccessLogEntry.protocolVersion;
