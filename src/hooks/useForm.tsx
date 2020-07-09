@@ -68,10 +68,11 @@ const useForm = (values = {}) => {
 
   useEffect(() => {
     isMounted.current = true;
-    Object.entries(values || {}).forEach(([key, value]) => {
-      const ref = fieldsRef.current[key]?.ref;
-      return !ref?.isOverWritten && ref?.setValue(typeof value === "undefined" || value === null ? "" : value);
-    });
+    JSON.stringify(values) !== JSON.stringify({}) &&
+      Object.entries(values).forEach(([key, value]) => {
+        const ref = fieldsRef.current[key]?.ref;
+        return !ref?.isOverWritten && ref?.setValue(typeof value === "undefined" || value === null ? "" : value);
+      });
     return () => {
       isMounted.current = false;
     };

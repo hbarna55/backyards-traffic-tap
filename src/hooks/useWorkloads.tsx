@@ -1,14 +1,12 @@
-import { useLazyQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 import { getWorkloadsGQL } from "api/getWorkloads";
-import usePolling from "hooks/usePolling";
 
 const useWorkloads = () => {
-  const [getWorkloads, { data: workloads }] = useLazyQuery<IstioWorkload>(getWorkloadsGQL, {
+  const { data: workloads } = useQuery<IstioWorkload>(getWorkloadsGQL, {
     variables: { namespaces: ["default", "backyards-demo"] },
+    pollInterval: 5000,
     fetchPolicy: "network-only",
   });
-
-  usePolling(getWorkloads);
 
   return { workloads };
 };

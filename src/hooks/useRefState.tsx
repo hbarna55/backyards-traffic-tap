@@ -20,7 +20,7 @@ const useRefState = (
       ref.current.isOverWritten = true;
       setValue(overRideValue);
     }
-  }, [overRideValue, setValue]);
+  }, []);
 
   return { value, setValue, ref };
 };

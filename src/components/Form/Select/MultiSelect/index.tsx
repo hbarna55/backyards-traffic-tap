@@ -12,11 +12,24 @@ type OwnProps = {
   validators?: Validators;
   className?: string;
   isDisabled?: boolean;
+  maxItems?: number;
+  overRideValue?: string[];
   handleChange?: (option: Option[]) => void;
 };
 
-const MultiSelect = ({ options, label, name, isDisabled, errors, className, register, handleChange }: OwnProps) => {
-  const { value, setValue } = useRefState(register!, name, []);
+const MultiSelect = ({
+  options,
+  label,
+  name,
+  isDisabled,
+  errors,
+  className,
+  register,
+  maxItems,
+  overRideValue,
+  handleChange,
+}: OwnProps) => {
+  const { value, setValue } = useRefState(register!, name, [], overRideValue);
 
   const getValue = useCallback((): ValueType<Option | Option[]> => {
     const option = options ? options.filter((option) => (value || []).indexOf(option.value) >= 0) : ([] as Option[]);
@@ -30,7 +43,7 @@ const MultiSelect = ({ options, label, name, isDisabled, errors, className, regi
     [options],
   );
 
-  const getLabel = (option: Option) => option.label;
+  const translateLabel = (option: Option) => option.label;
 
   const onChange = (option: Option | Option[]) => {
     if (Array.isArray(option)) {
@@ -56,15 +69,15 @@ const MultiSelect = ({ options, label, name, isDisabled, errors, className, regi
         name={name}
         value={getValue()}
         onChange={onChange}
-        options={usedOptions}
+        options={value.length >= maxItems! ? [] : usedOptions}
         isMulti
-        noOptionsMessage="noOption"
+        noOptionsMessage={() => (value.length >= maxItems! ? `max selected items: ${maxItems!}` : "noOption")}
         classNamePrefix="react-select"
         className={className + `${errors?.[name]?.messageKey ? " invalid" : ""}`}
         isDisabled={isDisabled}
         closeMenuOnSelect={false}
-        formatOptionLabel={getLabel}
-        getOptionLabel={getLabel}
+        formatOptionLabel={translateLabel}
+        getOptionLabel={translateLabel}
       />
       {errors?.[name] && <div>{errors?.[name]?.messageKey}</div>}
     </div>

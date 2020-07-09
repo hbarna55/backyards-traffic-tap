@@ -1,14 +1,12 @@
-import { useLazyQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 import { getNamespacesGQL } from "api/getNamespaces";
-import usePolling from "hooks/usePolling";
 
 const useNamespaces = () => {
-  const [getNamespaces, { data: namespaces }] = useLazyQuery<IstioNamespace>(getNamespacesGQL, {
+  const { data: namespaces } = useQuery<IstioNamespace>(getNamespacesGQL, {
     variables: {},
+    pollInterval: 5000,
     fetchPolicy: "network-only",
   });
-
-  usePolling(getNamespaces);
 
   return { namespaces };
 };

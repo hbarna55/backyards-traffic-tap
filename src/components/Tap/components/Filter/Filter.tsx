@@ -3,7 +3,7 @@ import MultiSelect from "components/Form/Select/MultiSelect";
 import SingleSelect from "components/Form/Select/SingleSelect";
 import Textfield from "components/Form/Textfield";
 import { naturalNumber, required } from "components/Form/validators";
-import React from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 type Props = {
   namespaces: IstioNamespace | undefined;
@@ -11,13 +11,58 @@ type Props = {
   setFilters: (accessLogsInput: AccessLogsInput) => void;
 };
 
+const DEFAULT_NAMESPACE_OPTION = { label: "default", value: "default" };
+
 const Filter = ({ namespaces, workloads, setFilters }: Props) => {
+  const [selectedNamesspaces, setSelectedNamesspaces] = useState([DEFAULT_NAMESPACE_OPTION]);
+  const namespaceOptions = useMemo(() => {
+    return namespaces
+      ? namespaces.namespaces.map((namespace) => ({ label: namespace.name, value: namespace.name }))
+      : [];
+  }, [namespaces]);
+
+  const resourceOptions = useMemo(() => {
+    return workloads
+      ? [
+          ...selectedNamesspaces,
+          ...workloads.workloads.map((workload) => ({ label: workload.name, value: workload.name })),
+        ]
+      : [...selectedNamesspaces];
+  }, [workloads]);
+
+  const handleChange = useCallback((value: any) => {
+    console.log(value);
+    setSelectedNamesspaces(value);
+  }, []);
+
   return (
     <div>
       <Form>
-        <Textfield name="pathPrefix" label="Path prefix: " />
-        <Textfield name="statusCodeMin" label="Status code: " validators={[naturalNumber]} />
-        <Textfield name="statusCodeMax" label="" validators={[naturalNumber]} />
+        <MultiSelect
+          name="namespaces"
+          label="Namespaces"
+          overRideValue={[DEFAULT_NAMESPACE_OPTION.value]}
+          handleChange={handleChange}
+          options={namespaceOptions}
+        />
+        <SingleSelect
+          name="resource"
+          label="Resource"
+          options={resourceOptions}
+          handleChange={handleChange}
+          validators={[required]}
+        />
+        <SingleSelect
+          name="destination"
+          label="Destination"
+          options={[
+            { label: "GET", value: "GET" },
+            { label: "POST", value: "POST" },
+            { label: "PUT", value: "PUT" },
+          ]}
+          handleChange={handleChange}
+          validators={[required]}
+        />
         <SingleSelect
           name="method"
           label="method"
@@ -26,23 +71,18 @@ const Filter = ({ namespaces, workloads, setFilters }: Props) => {
             { label: "POST", value: "POST" },
             { label: "PUT", value: "PUT" },
           ]}
+          handleChange={handleChange}
           validators={[required]}
         />
-        <MultiSelect
-          name="namespaces"
-          label="namespaces"
-          options={[
-            { label: "namespace1", value: "namespace1" },
-            { label: "namespace2", value: "namespace2" },
-            { label: "namespace3", value: "namespace3" },
-          ]}
+        <Textfield
+          name="statusCodeMin"
+          label="Status code: "
+          handleChange={handleChange}
+          validators={[naturalNumber]}
         />
+        <Textfield name="statusCodeMax" label="" handleChange={handleChange} validators={[naturalNumber]} />
+        <Textfield name="pathPrefix" label="Path prefix: " handleChange={handleChange} />
       </Form>
-      <div>
-        {namespaces?.namespaces.map((namespace) => (
-          <span key={namespace.id}>{namespace.name + " "}</span>
-        ))}
-      </div>
       <div>
         {workloads?.workloads.map((workload) => (
           <span key={workload.id}>{workload.name + " "}</span>

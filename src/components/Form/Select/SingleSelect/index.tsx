@@ -47,8 +47,7 @@ const SingleSelect = ({
     [options],
   );
 
-  const getLabel = (option: Option) => option.label;
-
+  const translateLabel = (option: Option) => option.label;
   return (
     <div>
       <label htmlFor={name}>{label}</label>
@@ -59,22 +58,22 @@ const SingleSelect = ({
         name={name}
         value={getValue()}
         onChange={(option: Option) => {
-          setValue((option as Option).value);
+          setValue((option as Option)?.value);
           handleChange && handleChange(option as Option);
         }}
         options={usedOptions}
-        noOptionsMessage="noOption"
+        noOptionsMessage={() => "noOption"}
         classNamePrefix="react-select"
         className={className + `${errors?.[name]?.messageKey ? " invalid" : ""}`}
         isDisabled={isDisabled}
         closeMenuOnSelect
-        formatOptionLabel={getLabel}
-        getOptionLabel={getLabel}
+        formatOptionLabel={translateLabel}
+        getOptionLabel={translateLabel}
       />
       {errors?.[name] && <div>{errors?.[name]?.messageKey}</div>}
     </div>
   );
 };
-SingleSelect.UNDEFINED_LABEL_TEXT = "null label";
+SingleSelect.UNDEFINED_LABEL_TEXT = "";
 
 export default SingleSelect;
