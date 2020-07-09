@@ -1,8 +1,9 @@
 import HTTPAccessLogEntryM from "api/models/HTTPAccessLogEntryM";
+import { TapFilterContext } from "context/TapFilter";
 import useAccessLogsSubscription from "hooks/useAccessLogsSubscription";
 import useNamespaces from "hooks/useNamespaces";
 import useWorkloads from "hooks/useWorkloads";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import Details from "./components/Details/Details";
 import Filter from "./components/Filter/Filter";
 import Table from "./components/Table/Table";
@@ -12,10 +13,10 @@ export const DEFAULT_NAMESPACE_OPTION = { label: "default", value: "default" };
 
 const Tap = () => {
   const [accessLogForDetails, _setAccessLogForDetails] = useState<HTTPAccessLogEntryM | null>(null);
-  const [workloadNamespaces, setWorkloadNamespaces] = useState<string[]>([DEFAULT_NAMESPACE_OPTION.value]);
+  const { namespaces: namespacesFilter } = useContext(TapFilterContext);
 
   const { namespaces } = useNamespaces();
-  const { workloads } = useWorkloads(workloadNamespaces);
+  const { workloads } = useWorkloads(namespacesFilter.get);
   const { accessLogs, error, isStreaming, setFilters } = useAccessLogsSubscription();
 
   const setAccessLogForDetails = useCallback(
@@ -43,13 +44,7 @@ const Tap = () => {
       </div>
       <div className="table-container">
         <Table accessLogs={accessLogs} setAccessLogForDetails={setAccessLogForDetails} error={error} />
-        <Filter
-          namespaces={namespaces}
-          workloads={workloads}
-          setFilters={setFilters}
-          selectedNamesspaces={workloadNamespaces}
-          setSelectedNamesspaces={setWorkloadNamespaces}
-        />
+        <Filter namespaces={namespaces} workloads={workloads} setFilters={setFilters} />
       </div>
       <div className="details-container">
         <Details accessLog={accessLogForDetails} />

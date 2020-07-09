@@ -2,6 +2,7 @@ import { useLazyQuery } from "@apollo/react-hooks";
 import { getUserGQL } from "api/getUser";
 import Authentication from "components/Authentication/Authentication";
 import Tap from "components/Tap/Tap";
+import { TapFilterContextProvider } from "context/TapFilter";
 import React, { useEffect, useState } from "react";
 
 const Index = () => {
@@ -24,7 +25,11 @@ const Index = () => {
           setLoginAttempt={setLoginAttempt}
         />
       )}
-      {data && !error && <Tap />}
+      {data && !error && (
+        <TapFilterContextProvider>
+          <Tap />
+        </TapFilterContextProvider>
+      )}
     </div>
   );
 };
