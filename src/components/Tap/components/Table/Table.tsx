@@ -31,7 +31,6 @@ const Table = ({ accessLogs, setAccessLogForDetails, error }: Props) => {
         <TableComponent columns={columns} data={accessLogs} isLoading={false} rowCallback={setAccessLogForDetails} />
       )}
       {error && <div>error</div>}
-      <button onClick={() => setAccessLogForDetails(accessLogs[0])}>button</button>
     </div>
   );
 };

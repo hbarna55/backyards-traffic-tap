@@ -43,7 +43,7 @@ export default styled.div`
         text-align: left;
         z-index: 1;
 
-        .filter .th-title {
+        .th-title {
           padding-bottom: ${parseInt(constants.cellPadding) / 2 + constants.cellPadding.replace(/\d*/, "")};
 
           span {

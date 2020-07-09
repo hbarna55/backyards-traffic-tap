@@ -1,5 +1,5 @@
 import { Column } from "components/Table/types";
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import {
   Row,
   useExpanded,
@@ -77,10 +77,6 @@ const Table = <T extends {}>({ columns, data, isLoading, id, rowCallback }: Prop
     usePagination,
   ) as any) as UseTableInstanceProps<T> &
     UsePaginationInstanceProps<T>
-
-  useEffect(() => {
-    data.length > 0 && rowCallback && rowCallback(data[0]);
-  }, []);
 
   return (
     <Styles>
