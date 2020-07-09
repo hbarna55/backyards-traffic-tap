@@ -40,6 +40,7 @@ const Tap = () => {
       </div>
       <div className="table-container">
         <Table accessLogs={accessLogs} setAccessLogForDetails={setAccessLogForDetails} error={error} />
+        <Filter namespaces={undefined} workloads={undefined} setFilters={setFilters} />
       </div>
       <div className="details-container">
         <Details accessLog={accessLogForDetails} />

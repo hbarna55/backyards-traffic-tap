@@ -19,6 +19,7 @@ const TextField = ({
   label,
   errors,
   register,
+  validators,
   className,
   isDisabled,
   autoComplete,
@@ -39,8 +40,17 @@ const TextField = ({
         value={value}
         autoComplete={autoComplete}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setValue(e.target.value);
-          handleChange && handleChange(e.target.value);
+          errors[name] = null;
+          validators &&
+            validators.every((validator) => {
+              const result = validator.callback(e.target.value);
+              !result && (errors[name] = validator);
+              return result;
+            });
+          if (!errors[name] || e.target.value === "") {
+            setValue(e.target.value);
+            handleChange && handleChange(e.target.value);
+          }
         }}
       />
       {errors?.[name] && <div>{errors?.[name]?.messageKey}</div>}

@@ -10,9 +10,9 @@ const useForm = (values = {}) => {
 
   const getFieldValues = (fields: FormValues) => {
     return Object.values(fields).reduce<FormValues>(
-      (previous, { ref: { name, value, type } }: Ref) => ({
+      (previous, { ref: { name, value, converter } }: Ref) => ({
         ...previous,
-        [name]: type === "number" ? Number(value) : value,
+        [name]: converter ? converter(value) : value,
       }),
       {} as FormValues,
     );

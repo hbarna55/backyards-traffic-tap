@@ -11,3 +11,12 @@ export const required: Validator = {
     return !!selfValue.toString().length;
   },
 };
+
+export const naturalNumber: Validator = {
+  type: SIMPLE,
+  messageKey: "",
+  callback: (selfValue: string): boolean => {
+    const regex = /^\d+$/;
+    return regex.test(selfValue);
+  },
+};

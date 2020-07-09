@@ -1,8 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 
-const useRefState = (register: Function, name: string, initialValue: any, overRideValue?: any) => {
+const useRefState = (
+  register: Function,
+  name: string,
+  initialValue: any,
+  overRideValue?: any,
+  converter?: (value: any) => void,
+) => {
   const [value, setValue] = useState(initialValue);
-  const ref = useRef({ name, value, setValue, isOverWritten: false });
+  const ref = useRef({ name, value, setValue, isOverWritten: false, converter });
   ref.current.value = value;
 
   useEffect(() => {
