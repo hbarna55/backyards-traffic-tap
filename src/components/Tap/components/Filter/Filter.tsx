@@ -3,18 +3,18 @@ import MultiSelect from "components/Form/Select/MultiSelect";
 import SingleSelect from "components/Form/Select/SingleSelect";
 import Textfield from "components/Form/Textfield";
 import { naturalNumber, required } from "components/Form/validators";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
+import { DEFAULT_NAMESPACE_OPTION } from "../../Tap";
 
 type Props = {
   namespaces: IstioNamespace | undefined;
   workloads: IstioWorkload | undefined;
   setFilters: (accessLogsInput: AccessLogsInput) => void;
+  selectedNamesspaces: string[];
+  setSelectedNamesspaces: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-const DEFAULT_NAMESPACE_OPTION = { label: "default", value: "default" };
-
-const Filter = ({ namespaces, workloads, setFilters }: Props) => {
-  const [selectedNamesspaces, setSelectedNamesspaces] = useState([DEFAULT_NAMESPACE_OPTION]);
+const Filter = ({ namespaces, workloads, setFilters, selectedNamesspaces, setSelectedNamesspaces }: Props) => {
   const namespaceOptions = useMemo(() => {
     return namespaces
       ? namespaces.namespaces.map((namespace) => ({ label: namespace.name, value: namespace.name }))
@@ -24,10 +24,10 @@ const Filter = ({ namespaces, workloads, setFilters }: Props) => {
   const resourceOptions = useMemo(() => {
     return workloads
       ? [
-          ...selectedNamesspaces,
+          ...selectedNamesspaces.map((namesspace) => ({ label: namesspace, value: namesspace })),
           ...workloads.workloads.map((workload) => ({ label: workload.name, value: workload.name })),
         ]
-      : [...selectedNamesspaces];
+      : selectedNamesspaces.map((namesspace) => ({ label: namesspace, value: namesspace }));
   }, [workloads]);
 
   const handleChange = useCallback((value: any) => {

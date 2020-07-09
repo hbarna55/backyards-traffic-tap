@@ -8,11 +8,14 @@ import Filter from "./components/Filter/Filter";
 import Table from "./components/Table/Table";
 import { StyledTap } from "./style";
 
+export const DEFAULT_NAMESPACE_OPTION = { label: "default", value: "default" };
+
 const Tap = () => {
   const [accessLogForDetails, _setAccessLogForDetails] = useState<HTTPAccessLogEntryM | null>(null);
+  const [workloadNamespaces, setWorkloadNamespaces] = useState<string[]>([DEFAULT_NAMESPACE_OPTION.value]);
 
   const { namespaces } = useNamespaces();
-  const { workloads } = useWorkloads();
+  const { workloads } = useWorkloads(workloadNamespaces);
   const { accessLogs, error, isStreaming, setFilters } = useAccessLogsSubscription();
 
   const setAccessLogForDetails = useCallback(
@@ -40,7 +43,13 @@ const Tap = () => {
       </div>
       <div className="table-container">
         <Table accessLogs={accessLogs} setAccessLogForDetails={setAccessLogForDetails} error={error} />
-        <Filter namespaces={namespaces} workloads={workloads} setFilters={setFilters} />
+        <Filter
+          namespaces={namespaces}
+          workloads={workloads}
+          setFilters={setFilters}
+          selectedNamesspaces={workloadNamespaces}
+          setSelectedNamesspaces={setWorkloadNamespaces}
+        />
       </div>
       <div className="details-container">
         <Details accessLog={accessLogForDetails} />
