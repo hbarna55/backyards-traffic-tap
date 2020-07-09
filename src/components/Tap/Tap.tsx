@@ -17,7 +17,7 @@ const Tap = () => {
 
   const { namespaces } = useNamespaces();
   const { workloads } = useWorkloads(namespacesFilter.get);
-  const { accessLogs, error, isStreaming, setFilters } = useAccessLogsSubscription();
+  const { accessLogs, error, isStreaming, filters, setFilters } = useAccessLogsSubscription();
 
   const setAccessLogForDetails = useCallback(
     (accessLog: HTTPAccessLogEntryM) => {
@@ -43,8 +43,8 @@ const Tap = () => {
         <button onClick={toggleStreaming}>Start</button>
       </div>
       <div className="table-container">
+        <Filter namespaces={namespaces} workloads={workloads} filters={filters} setFilters={setFilters} />
         <Table accessLogs={accessLogs} setAccessLogForDetails={setAccessLogForDetails} error={error} />
-        <Filter namespaces={namespaces} workloads={workloads} setFilters={setFilters} />
       </div>
       <div className="details-container">
         <Details accessLog={accessLogForDetails} />

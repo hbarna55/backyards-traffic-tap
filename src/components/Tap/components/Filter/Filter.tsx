@@ -9,10 +9,11 @@ import React, { useCallback, useContext, useMemo } from "react";
 type Props = {
   namespaces: IstioNamespace | undefined;
   workloads: IstioWorkload | undefined;
+  filters: AccessLogsInput;
   setFilters: (accessLogsInput: AccessLogsInput) => void;
 };
 
-const Filter = ({ namespaces, workloads, setFilters }: Props) => {
+const Filter = ({ namespaces, workloads, filters, setFilters }: Props) => {
   const { namespaces: namespacesFilter } = useContext(TapFilterContext);
   const namespaceOptions = useMemo(() => {
     return namespaces
@@ -27,12 +28,53 @@ const Filter = ({ namespaces, workloads, setFilters }: Props) => {
           ...workloads.workloads.map((workload) => ({ label: workload.name, value: workload.name })),
         ]
       : namespacesFilter.get.map((namesspace) => ({ label: namesspace, value: namesspace }));
-  }, [workloads]);
+  }, [workloads, namespacesFilter.get]);
 
-  const handleChange = useCallback((value: any) => {
-    console.log(value);
-    namespacesFilter.set(value);
-  }, []);
+  const _setFilters = useCallback(
+    (value: any, key: keyof AccessLogsInput) => {
+      if (value) {
+        setFilters({ ...filters, [key]: value.value });
+      } else {
+        const newFilter = { ...filters };
+        delete newFilter[key];
+        setFilters(newFilter);
+      }
+    },
+    [namespacesFilter],
+  );
+
+  const setNamespaces = useCallback(
+    (value: any) => {
+      namespacesFilter.set(value);
+    },
+    [namespacesFilter],
+  );
+  const setResource = useCallback(
+    (value: any) => {
+      _setFilters(value, "method");
+    },
+    [setFilters, filters],
+  );
+  const setDestination = useCallback(
+    (value: any) => {
+      _setFilters(value, "method");
+    },
+    [setFilters, filters],
+  );
+  const setMethod = useCallback((value: any) => _setFilters(value, "method"), [setFilters, filters]);
+  const setStatusCodeMin = useCallback(
+    (value: any) => {
+      _setFilters(value, "method");
+    },
+    [setFilters, filters],
+  );
+  const setStatusCodeMax = useCallback(
+    (value: any) => {
+      _setFilters(value, "method");
+    },
+    [setFilters, filters],
+  );
+  const setPathPrefix = useCallback((value: any) => _setFilters(value, "path"), [setFilters, filters]);
 
   return (
     <div>
@@ -41,25 +83,21 @@ const Filter = ({ namespaces, workloads, setFilters }: Props) => {
           name="namespaces"
           label="Namespaces"
           overRideValue={[DEFAULT_NAMESPACE_OPTION.value]}
-          handleChange={handleChange}
+          handleChange={setNamespaces}
           options={namespaceOptions}
         />
         <SingleSelect
           name="resource"
           label="Resource"
           options={resourceOptions}
-          handleChange={handleChange}
+          handleChange={setResource}
           validators={[required]}
         />
         <SingleSelect
           name="destination"
           label="Destination"
-          options={[
-            { label: "GET", value: "GET" },
-            { label: "POST", value: "POST" },
-            { label: "PUT", value: "PUT" },
-          ]}
-          handleChange={handleChange}
+          options={resourceOptions}
+          handleChange={setDestination}
           validators={[required]}
         />
         <SingleSelect
@@ -70,24 +108,18 @@ const Filter = ({ namespaces, workloads, setFilters }: Props) => {
             { label: "POST", value: "POST" },
             { label: "PUT", value: "PUT" },
           ]}
-          handleChange={handleChange}
+          handleChange={setMethod}
           validators={[required]}
         />
         <Textfield
           name="statusCodeMin"
           label="Status code: "
-          handleChange={handleChange}
+          handleChange={setStatusCodeMin}
           validators={[naturalNumber]}
         />
-        <Textfield name="statusCodeMax" label="" handleChange={handleChange} validators={[naturalNumber]} />
-        <Textfield name="pathPrefix" label="Path prefix: " handleChange={handleChange} />
+        <Textfield name="statusCodeMax" label="" handleChange={setStatusCodeMax} validators={[naturalNumber]} />
+        <Textfield name="pathPrefix" label="Path prefix: " handleChange={setPathPrefix} />
       </Form>
-      <div>
-        {workloads?.workloads.map((workload) => (
-          <span key={workload.id}>{workload.name + " "}</span>
-        ))}
-      </div>
-      <button onClick={() => setFilters({ method: "POST" })}>Set POST</button>
     </div>
   );
 };

@@ -32,6 +32,6 @@ const useAccessLogsSubscription = () => {
     },
   });
 
-  return { accessLogs, error, isStreaming, setFilters };
+  return { accessLogs, error, isStreaming, filters, setFilters };
 };
 export default useAccessLogsSubscription;
