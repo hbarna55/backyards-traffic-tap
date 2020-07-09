@@ -1,15 +1,21 @@
+import Form from "components/Form";
+import Textfield from "components/Form/Textfield";
+import { required } from "components/Form/validators";
 import React from "react";
 
 type Props = {
   namespaces: IstioNamespace | undefined;
   workloads: IstioWorkload | undefined;
-  setFilters: React.Dispatch<React.SetStateAction<AccessLogsInput>>;
+  setFilters: (accessLogsInput: AccessLogsInput) => void;
 };
 
 const Filter = ({ namespaces, workloads, setFilters }: Props) => {
   return (
     <div>
       <div>Filter</div>
+      <Form>
+        <Textfield name="token" label="Token: " validators={[required]} />
+      </Form>
       <div>
         {namespaces?.namespaces.map((namespace) => (
           <span key={namespace.id}>{namespace.name + " "}</span>

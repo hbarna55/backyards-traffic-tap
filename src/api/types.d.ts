@@ -1,5 +1,17 @@
 declare type AccessLogsInput = {
+  reporterNamespace?: string;
+  reporterType?: "WORKLOAD";
+  reporterName?: string;
+
+  destinationNamespace?: string;
+  destinationType?: "WORKLOAD";
+  destinationName?: string;
+
   method?: "GET" | "POST" | "PUT";
+
+  statusCode?: { min?: number; max?: number };
+
+  path?: string;
 };
 
 type TCPAddr = {

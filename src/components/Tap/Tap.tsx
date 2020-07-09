@@ -4,7 +4,7 @@ import useAccessLogsSubscription from "hooks/useAccessLogsSubscription";
 // import useWorkloads from "hooks/useWorkloads";
 import React, { useCallback, useState } from "react";
 import Details from "./components/Details/Details";
-// import Filter from "./components/Filter/Filter";
+import Filter from "./components/Filter/Filter";
 import Table from "./components/Table/Table";
 import { StyledTap } from "./style";
 
@@ -13,7 +13,7 @@ const Tap = () => {
 
   // const { namespaces } = useNamespaces();
   // const { workloads } = useWorkloads();
-  const { accessLogs, error, isStreaming /*, setFilters*/ } = useAccessLogsSubscription();
+  const { accessLogs, error, isStreaming, setFilters } = useAccessLogsSubscription();
 
   const setAccessLogForDetails = useCallback(
     (accessLog: HTTPAccessLogEntryM) => {
@@ -33,7 +33,7 @@ const Tap = () => {
   return (
     <StyledTap idDetailsShown={!!accessLogForDetails}>
       <div className="filter-container">
-        {/* <Filter namespaces={namespaces} workloads={workloads} setFilters={setFilters} /> */}
+        <Filter namespaces={undefined} workloads={undefined} setFilters={setFilters} />
       </div>
       <div className="button-container">
         <button onClick={toggleStreaming}>Start</button>

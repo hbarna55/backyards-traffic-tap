@@ -1,7 +1,7 @@
 import { useSubscription } from "@apollo/react-hooks";
 import HTTPAccessLogEntryM from "api/models/HTTPAccessLogEntryM";
 import { subscribeAccessLogsGQL } from "api/subscribeAccessLogs";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import ApolloClients from "utils/ApolloClients";
 
 const useAccessLogsSubscription = () => {
@@ -88,8 +88,16 @@ const useAccessLogsSubscription = () => {
       response: { statusCode: 200 },
     } as HTTPAccessLogEntry),
   ]);
-  const [filters, setFilters] = useState<AccessLogsInput>({});
+  const [filters, _setFilters] = useState<AccessLogsInput>({});
   const isStreaming = useRef(false);
+
+  const setFilters = useCallback(
+    (accessLogsInput: AccessLogsInput) => {
+      setAccessLogs([]);
+      _setFilters(accessLogsInput);
+    },
+    [_setFilters],
+  );
 
   const { error } = useSubscription<HTTPAccessLogs>(subscribeAccessLogsGQL, {
     variables: { input: filters },
