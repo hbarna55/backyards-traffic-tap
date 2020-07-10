@@ -1,7 +1,7 @@
-import Form from "components/Form";
-import MultiSelect from "components/Form/Select/MultiSelect";
-import SingleSelect from "components/Form/Select/SingleSelect";
-import Textfield from "components/Form/Textfield";
+import Form from "components/Form/Form";
+import MultiSelect from "components/Form/Select/MultiSelect/MultiSelect";
+import SingleSelect from "components/Form/Select/SingleSelect/SingleSelect";
+import Textfield from "components/Form/Textfield/Textfield";
 import { naturalNumber, required } from "components/Form/validators";
 import { DEFAULT_NAMESPACE_OPTION, TapFilterContext } from "context/TapFilter";
 import React, { useCallback, useContext, useMemo } from "react";

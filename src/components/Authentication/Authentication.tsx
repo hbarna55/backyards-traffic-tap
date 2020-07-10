@@ -1,7 +1,7 @@
 import { QueryLazyOptions } from "@apollo/react-hooks";
 import { ApolloError } from "apollo-boost";
-import Form from "components/Form";
-import Textfield from "components/Form/Textfield";
+import Form from "components/Form/Form";
+import Textfield from "components/Form/Textfield/Textfield";
 import { required } from "components/Form/validators";
 import { GRAPHQL_API_ENDPOINT, TOKEN_KEY } from "config";
 import React, { useCallback } from "react";
