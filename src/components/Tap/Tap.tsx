@@ -1,4 +1,5 @@
 import HTTPAccessLogEntryM from "api/models/HTTPAccessLogEntryM";
+import Button from "components/Form/StyledElements/Button/Button";
 import { TapFilterContext } from "context/TapFilter";
 import useAccessLogsSubscription from "hooks/useAccessLogsSubscription";
 import useNamespaces from "hooks/useNamespaces";
@@ -38,7 +39,7 @@ const Tap = () => {
         {/* <Filter namespaces={namespaces} workloads={workloads} setFilters={setFilters} /> */}
       </div>
       <div className="button-container">
-        <button onClick={toggleStreaming}>Start</button>
+        <Button onClick={toggleStreaming}>{isStreaming.current ? "stop" : "start"}</Button>
       </div>
       <div className="table-container">
         <Filter namespaces={namespaces} workloads={workloads} filters={filters} setFilters={setFilters} />

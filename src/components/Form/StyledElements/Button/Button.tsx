@@ -11,7 +11,6 @@ const Button = styled.button`
   display: inline-block;
   border: none;
   letter-spacing: 2px;
-  margin-top: 1rem;
   transition: all 0.4s ease 0s;
   cursor: pointer;
 

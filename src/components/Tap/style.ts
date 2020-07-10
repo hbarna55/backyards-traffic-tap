@@ -21,8 +21,8 @@ export const StyledTap = styled.div<Props>`
 
   .button-container {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 0.5rem;
+    right: 0.5rem;
   }
 
   .table-container,
