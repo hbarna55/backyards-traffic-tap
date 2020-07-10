@@ -9,8 +9,6 @@ import Filter from "./components/Filter/Filter";
 import Table from "./components/Table/Table";
 import { StyledTap } from "./style";
 
-export const DEFAULT_NAMESPACE_OPTION = { label: "default", value: "default" };
-
 const Tap = () => {
   const [accessLogForDetails, _setAccessLogForDetails] = useState<HTTPAccessLogEntryM | null>(null);
   const { namespaces: namespacesFilter } = useContext(TapFilterContext);

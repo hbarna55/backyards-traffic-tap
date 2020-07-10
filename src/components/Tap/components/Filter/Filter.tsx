@@ -5,6 +5,7 @@ import Textfield from "components/Form/Textfield";
 import { naturalNumber, required } from "components/Form/validators";
 import { DEFAULT_NAMESPACE_OPTION, TapFilterContext } from "context/TapFilter";
 import React, { useCallback, useContext, useMemo } from "react";
+import useFilters from "./useFilters";
 
 type Props = {
   namespaces: IstioNamespace | undefined;
@@ -15,6 +16,10 @@ type Props = {
 
 const Filter = ({ namespaces, workloads, filters, setFilters }: Props) => {
   const { namespaces: namespacesFilter } = useContext(TapFilterContext);
+  const { setResource, setDestination, setMethod, setStatusCodeMin, setStatusCodeMax, setPathPrefix } = useFilters(
+    filters,
+    setFilters,
+  );
   const namespaceOptions = useMemo(() => {
     return namespaces
       ? namespaces.namespaces.map((namespace) => ({ label: namespace.name, value: namespace.name }))
@@ -25,23 +30,16 @@ const Filter = ({ namespaces, workloads, filters, setFilters }: Props) => {
     return workloads
       ? [
           ...namespacesFilter.get.map((namesspace) => ({ label: namesspace, value: namesspace })),
-          ...workloads.workloads.map((workload) => ({ label: workload.name, value: workload.name })),
+          ...workloads.workloads.map((workload) => {
+            const nameWithNamespace = `${workload.namespace}/${workload.name}`;
+            return {
+              label: nameWithNamespace,
+              value: nameWithNamespace,
+            };
+          }),
         ]
       : namespacesFilter.get.map((namesspace) => ({ label: namesspace, value: namesspace }));
   }, [workloads, namespacesFilter.get]);
-
-  const _setFilters = useCallback(
-    (value: any, key: keyof AccessLogsInput) => {
-      if (value) {
-        setFilters({ ...filters, [key]: value.value });
-      } else {
-        const newFilter = { ...filters };
-        delete newFilter[key];
-        setFilters(newFilter);
-      }
-    },
-    [namespacesFilter],
-  );
 
   const setNamespaces = useCallback(
     (value: any) => {
@@ -49,32 +47,6 @@ const Filter = ({ namespaces, workloads, filters, setFilters }: Props) => {
     },
     [namespacesFilter],
   );
-  const setResource = useCallback(
-    (value: any) => {
-      _setFilters(value, "method");
-    },
-    [setFilters, filters],
-  );
-  const setDestination = useCallback(
-    (value: any) => {
-      _setFilters(value, "method");
-    },
-    [setFilters, filters],
-  );
-  const setMethod = useCallback((value: any) => _setFilters(value, "method"), [setFilters, filters]);
-  const setStatusCodeMin = useCallback(
-    (value: any) => {
-      _setFilters(value, "method");
-    },
-    [setFilters, filters],
-  );
-  const setStatusCodeMax = useCallback(
-    (value: any) => {
-      _setFilters(value, "method");
-    },
-    [setFilters, filters],
-  );
-  const setPathPrefix = useCallback((value: any) => _setFilters(value, "path"), [setFilters, filters]);
 
   return (
     <div>

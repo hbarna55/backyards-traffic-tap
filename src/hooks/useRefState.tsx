@@ -20,7 +20,7 @@ const useRefState = (
       ref.current.isOverWritten = true;
       setValue(overRideValue);
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return { value, setValue, ref };
 };

@@ -64,5 +64,6 @@ type IstioWorkload = {
   workloads: {
     id: string;
     name: string;
+    namespace: string;
   }[];
 };
