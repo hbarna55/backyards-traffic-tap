@@ -1,3 +1,6 @@
+import Error from "components/Form/StyledElements/Error/Error";
+import Input from "components/Form/StyledElements/Input/Input";
+import Label from "components/Form/StyledElements/Label/Label";
 import useRefState from "hooks/useRefState";
 import { default as React } from "react";
 
@@ -29,13 +32,13 @@ const TextField = ({
   const { value, setValue } = useRefState(register!, name, "", overRideValue);
 
   return (
-    <div>
-      <label htmlFor={name}>{label}</label>
-      <input
+    <div style={{ width: "100%" }}>
+      <Label htmlFor={name}>{label}</Label>
+      <Input
         id={name}
         type="text"
         name={name}
-        className={className + `${errors?.[name]?.messageKey ? " invalid" : ""}`}
+        className={className + `${errors?.[name]?.message ? " invalid" : ""}`}
         disabled={isDisabled}
         value={value}
         autoComplete={autoComplete}
@@ -53,7 +56,7 @@ const TextField = ({
           }
         }}
       />
-      {errors?.[name] && <div>{errors?.[name]?.messageKey}</div>}
+      <Error>{errors && errors?.[name] ? errors?.[name]?.message : ""}</Error>
     </div>
   );
 };

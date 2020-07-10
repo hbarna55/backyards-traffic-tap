@@ -32,6 +32,11 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+html,
+body,
+#root {
+	height: 100vh;
+}
 body {
 	line-height: 1;
 }

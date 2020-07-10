@@ -3,7 +3,7 @@ export const REQUIRED = "REQUIRED";
 
 export const required: Validator = {
   type: REQUIRED,
-  messageKey: "required",
+  message: "Field cannot be empty",
   callback: (selfValue: any): boolean => {
     if (typeof selfValue === "undefined" || selfValue === "" || selfValue === null) {
       return false;
@@ -14,7 +14,7 @@ export const required: Validator = {
 
 export const naturalNumber: Validator = {
   type: SIMPLE,
-  messageKey: "",
+  message: "",
   callback: (selfValue: string): boolean => {
     const regex = /^\d+$/;
     return regex.test(selfValue);

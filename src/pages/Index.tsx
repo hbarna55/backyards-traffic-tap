@@ -17,7 +17,7 @@ const Index = () => {
 
   return (
     <div>
-      {!data && error && (
+      {(!data || error) && (
         <Authentication
           testLogin={testLogin}
           error={error}

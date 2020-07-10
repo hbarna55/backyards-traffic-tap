@@ -64,13 +64,13 @@ const SingleSelect = ({
         options={usedOptions}
         noOptionsMessage={() => "noOption"}
         classNamePrefix="react-select"
-        className={className + `${errors?.[name]?.messageKey ? " invalid" : ""}`}
+        className={className + `${errors?.[name]?.message ? " invalid" : ""}`}
         isDisabled={isDisabled}
         closeMenuOnSelect
         formatOptionLabel={translateLabel}
         getOptionLabel={translateLabel}
       />
-      {errors?.[name] && <div>{errors?.[name]?.messageKey}</div>}
+      {errors?.[name] && <div>{errors?.[name]?.message}</div>}
     </div>
   );
 };
