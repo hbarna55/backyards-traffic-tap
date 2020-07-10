@@ -7,8 +7,11 @@ import React, { useEffect, useState } from "react";
 
 const Index = () => {
   const [wasLoginAttempt, setLoginAttempt] = useState(false);
+  const [wasLoginTested, setLoginTested] = useState(false);
   const [testLogin, { data, error }] = useLazyQuery(getUserGQL, {
     variables: {},
+    onCompleted: () => setLoginTested(true),
+    onError: () => setLoginTested(true),
   });
 
   useEffect(() => {
@@ -16,21 +19,26 @@ const Index = () => {
   }, [testLogin]);
 
   return (
-    <div>
-      {(!data || error) && (
-        <Authentication
-          testLogin={testLogin}
-          error={error}
-          wasLoginAttempt={wasLoginAttempt}
-          setLoginAttempt={setLoginAttempt}
-        />
+    <>
+      {wasLoginTested && (
+        <div>
+          {(!data || error) && (
+            <Authentication
+              testLogin={testLogin}
+              error={error}
+              wasLoginAttempt={wasLoginAttempt}
+              setLoginAttempt={setLoginAttempt}
+            />
+          )}
+          {data && !error && (
+            <TapFilterContextProvider>
+              <Tap />
+            </TapFilterContextProvider>
+          )}
+        </div>
       )}
-      {data && !error && (
-        <TapFilterContextProvider>
-          <Tap />
-        </TapFilterContextProvider>
-      )}
-    </div>
+      {!wasLoginTested && <div></div>}
+    </>
   );
 };
 

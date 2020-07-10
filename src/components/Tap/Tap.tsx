@@ -36,13 +36,12 @@ const Tap = () => {
   return (
     <StyledTap idDetailsShown={!!accessLogForDetails}>
       <div className="filter-container">
-        {/* <Filter namespaces={namespaces} workloads={workloads} setFilters={setFilters} /> */}
+        <Filter namespaces={namespaces} workloads={workloads} filters={filters} setFilters={setFilters} />
       </div>
       <div className="button-container">
         <Button onClick={toggleStreaming}>{isStreaming.current ? "stop" : "start"}</Button>
       </div>
       <div className="table-container">
-        <Filter namespaces={namespaces} workloads={workloads} filters={filters} setFilters={setFilters} />
         <Table accessLogs={accessLogs} setAccessLogForDetails={setAccessLogForDetails} error={error} />
       </div>
       <div className="details-container">
