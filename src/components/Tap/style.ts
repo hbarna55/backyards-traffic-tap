@@ -17,6 +17,7 @@ export const StyledTap = styled.div<Props>`
   .filter-container {
     height: ${filterHeight};
     border-bottom: solid 1px ${colors.grayDark};
+    right: 5rem;
   }
 
   .button-container {
