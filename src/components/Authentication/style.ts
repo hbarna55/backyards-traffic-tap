@@ -29,6 +29,10 @@ const Style = styled.div`
       justify-content: center;
       flex-direction: column;
       align-items: center;
+
+      button {
+        margin-top: 1.5rem;
+      }
     }
   }
 `;

@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react";
 const Index = () => {
   const [wasLoginAttempt, setLoginAttempt] = useState(false);
   const [wasLoginTested, setLoginTested] = useState(false);
-  const [testLogin, { data, error }] = useLazyQuery(getUserGQL, {
+  const [testLogin, { data, loading, error }] = useLazyQuery(getUserGQL, {
     variables: {},
     onCompleted: () => setLoginTested(true),
     onError: () => setLoginTested(true),
@@ -26,6 +26,7 @@ const Index = () => {
             <Authentication
               testLogin={testLogin}
               error={error}
+              loading={loading}
               wasLoginAttempt={wasLoginAttempt}
               setLoginAttempt={setLoginAttempt}
             />
