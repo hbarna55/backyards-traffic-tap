@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import constants from "../../constants";
 import Circle from "./components/Circle/Circle";
 import Item from "./components/Item/Item";
 
@@ -23,7 +24,7 @@ const Info = ({ requestEndpoint, color }: Props) => {
 };
 
 export const Style = styled.div`
-  padding: 0 24px;
+  padding: 0 ${constants.mainPadding};
 
   .text {
     width: calc(100% - 5rem);

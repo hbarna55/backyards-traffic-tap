@@ -17,7 +17,9 @@ const Item = ({ name, value }: Props) => {
 };
 
 export const Style = styled.div`
-  padding: 0 1rem;
+  padding-bottom: 2px;
+  padding-left: 1rem;
+
   .value {
     float: right;
   }
