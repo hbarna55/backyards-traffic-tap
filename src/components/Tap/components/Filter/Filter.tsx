@@ -3,7 +3,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
-import Form from "components/Form/Form";
 import { TapFilterContext } from "context/TapFilter";
 import React, { useContext } from "react";
 import styled from "styled-components";
@@ -41,7 +40,7 @@ const Filter = ({ namespaces, workloads, filters, setFilters }: Props) => {
 
   return (
     <Style>
-      <Form>
+      <form>
         <FormControl>
           <InputLabel id="select-namespaces-label" shrink>
             Namespaces
@@ -122,7 +121,7 @@ const Filter = ({ namespaces, workloads, filters, setFilters }: Props) => {
           InputLabelProps={{ shrink: true }}
           onChange={setPathPrefix}
         />
-      </Form>
+      </form>
     </Style>
   );
 };
