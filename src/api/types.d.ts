@@ -1,3 +1,5 @@
+declare type RequestMethodes = "GET" | "POST" | "PUT";
+
 declare type AccessLogsInput = {
   reporterNamespace?: string;
   reporterType?: "WORKLOAD";
@@ -7,7 +9,7 @@ declare type AccessLogsInput = {
   destinationType?: "WORKLOAD";
   destinationName?: string;
 
-  method?: "GET" | "POST" | "PUT";
+  method?: RequestMethodes;
 
   statusCode?: { min?: number; max?: number };
 

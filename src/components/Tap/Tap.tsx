@@ -1,5 +1,5 @@
+import Button from "@material-ui/core/Button";
 import HTTPAccessLogEntryM from "api/models/HTTPAccessLogEntryM";
-import Button from "components/Form/StyledElements/Button/Button";
 import { TapFilterContext } from "context/TapFilter";
 import useAccessLogsSubscription from "hooks/useAccessLogsSubscription";
 import useNamespaces from "hooks/useNamespaces";
@@ -12,7 +12,7 @@ import { StyledTap } from "./style";
 
 const Tap = () => {
   const [accessLogForDetails, _setAccessLogForDetails] = useState<HTTPAccessLogEntryM | null>(null);
-  const { namespaces: namespacesFilter } = useContext(TapFilterContext);
+  const { namespacesFilter } = useContext(TapFilterContext);
 
   const { namespaces } = useNamespaces();
   const { workloads } = useWorkloads(namespacesFilter.get);
@@ -39,7 +39,9 @@ const Tap = () => {
         <Filter namespaces={namespaces} workloads={workloads} filters={filters} setFilters={setFilters} />
       </div>
       <div className="button-container">
-        <Button onClick={toggleStreaming}>{isStreaming.current ? "stop" : "start"}</Button>
+        <Button variant="contained" color="primary" onClick={toggleStreaming}>
+          {isStreaming.current ? "❚❚" : "▶"}
+        </Button>
       </div>
       <div className="table-container">
         <Table accessLogs={accessLogs} setAccessLogForDetails={setAccessLogForDetails} error={error} />

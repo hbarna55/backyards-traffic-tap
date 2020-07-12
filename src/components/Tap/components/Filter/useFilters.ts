@@ -1,8 +1,31 @@
-import { useCallback } from "react";
+import { TapFilterContext } from "context/TapFilter";
+import { useCallback, useContext } from "react";
 
 const useFilters = (filters: AccessLogsInput, setFilters: (accessLogsInput: AccessLogsInput) => void) => {
+  const {
+    namespacesFilter,
+    resourceFilter,
+    destinationFilter,
+    methodFilter,
+    statusCodeMinFilter,
+    statusCodeMaxFilter,
+    pathPrefixFilter,
+  } = useContext(TapFilterContext);
+
+  const setNamespaces = useCallback(
+    (event: React.ChangeEvent<{ value: unknown }>) => {
+      const value = event.target.value as string[];
+      if (value.length < 1) return;
+      namespacesFilter.set(value);
+    },
+    [namespacesFilter],
+  );
+
   const setResource = useCallback(
-    (value: any) => {
+    (event: React.ChangeEvent<{ value: unknown }>) => {
+      const value = event.target.value as string;
+      resourceFilter.set(value);
+
       if (!value) {
         const newFilter = { ...filters };
         delete newFilter.reporterNamespace;
@@ -11,7 +34,7 @@ const useFilters = (filters: AccessLogsInput, setFilters: (accessLogsInput: Acce
         setFilters(newFilter);
         return;
       }
-      const [namespace, workload] = value.value.split("/");
+      const [namespace, workload] = value.split("/");
       const newFilterWithNs = { ...filters, reporterNamespace: namespace };
       if (!workload) {
         delete newFilterWithNs.reporterType;
@@ -26,10 +49,14 @@ const useFilters = (filters: AccessLogsInput, setFilters: (accessLogsInput: Acce
       };
       setFilters(newFilterWithNsAndW);
     },
-    [setFilters, filters],
+    [setFilters, filters, resourceFilter],
   );
+
   const setDestination = useCallback(
-    (value: any) => {
+    (event: React.ChangeEvent<{ value: unknown }>) => {
+      const value = event.target.value as string;
+      destinationFilter.set(value);
+
       if (!value) {
         const newFilter = { ...filters };
         delete newFilter.destinationNamespace;
@@ -38,7 +65,7 @@ const useFilters = (filters: AccessLogsInput, setFilters: (accessLogsInput: Acce
         setFilters(newFilter);
         return;
       }
-      const [namespace, workload] = value.value.split("/");
+      const [namespace, workload] = value.split("/");
       const newFilterWithNs = { ...filters, destinationNamespace: namespace };
       if (!workload) {
         delete newFilterWithNs.destinationType;
@@ -53,24 +80,30 @@ const useFilters = (filters: AccessLogsInput, setFilters: (accessLogsInput: Acce
       };
       setFilters(newFilterWithNsAndW);
     },
-    [setFilters, filters],
+    [setFilters, filters, destinationFilter],
   );
   const setMethod = useCallback(
-    (value: any) => {
+    (event: React.ChangeEvent<{ value: unknown }>) => {
+      const value = event.target.value as RequestMethodes;
+      methodFilter.set(value);
+
       if (value) {
-        setFilters({ ...filters, method: value?.value });
+        setFilters({ ...filters, method: value });
       } else {
         const newFilter = { ...filters };
         delete newFilter.method;
         setFilters(newFilter);
       }
     },
-    [setFilters, filters],
+    [setFilters, filters, methodFilter],
   );
   const setStatusCodeMin = useCallback(
-    (value: any) => {
+    (event: React.ChangeEvent<{ value: unknown }>) => {
+      const value = event.target.value as string;
+      statusCodeMinFilter.set(value);
+
       if (value) {
-        setFilters({ ...filters, statusCode: { ...filters.statusCode, min: value } });
+        setFilters({ ...filters, statusCode: { ...filters.statusCode, min: Number(value) } });
       } else {
         const newFilter = { ...filters };
         if (!newFilter.statusCode?.max) {
@@ -82,12 +115,15 @@ const useFilters = (filters: AccessLogsInput, setFilters: (accessLogsInput: Acce
         }
       }
     },
-    [setFilters, filters],
+    [setFilters, filters, statusCodeMinFilter],
   );
   const setStatusCodeMax = useCallback(
-    (value: any) => {
+    (event: React.ChangeEvent<{ value: unknown }>) => {
+      const value = event.target.value as string;
+      statusCodeMaxFilter.set(value);
+
       if (value) {
-        setFilters({ ...filters, statusCode: { ...filters.statusCode, max: value } });
+        setFilters({ ...filters, statusCode: { ...filters.statusCode, max: Number(value) } });
       } else {
         const newFilter = { ...filters };
         if (!newFilter.statusCode?.min) {
@@ -99,10 +135,13 @@ const useFilters = (filters: AccessLogsInput, setFilters: (accessLogsInput: Acce
         }
       }
     },
-    [setFilters, filters],
+    [setFilters, filters, statusCodeMaxFilter],
   );
   const setPathPrefix = useCallback(
-    (value: any) => {
+    (event: React.ChangeEvent<{ value: unknown }>) => {
+      const value = event.target.value as string;
+      pathPrefixFilter.set(value);
+
       if (value) {
         setFilters({ ...filters, path: value });
       } else {
@@ -111,10 +150,11 @@ const useFilters = (filters: AccessLogsInput, setFilters: (accessLogsInput: Acce
         setFilters(newFilter);
       }
     },
-    [setFilters, filters],
+    [setFilters, filters, pathPrefixFilter],
   );
 
   return {
+    setNamespaces,
     setResource,
     setDestination,
     setMethod,
