@@ -12,11 +12,11 @@ import { StyledTap } from "./style";
 
 const Tap = () => {
   const [accessLogForDetails, _setAccessLogForDetails] = useState<HTTPAccessLogEntryM | null>(null);
-  const { namespacesFilter } = useContext(TapFilterContext);
+  const { streaming, namespacesFilter } = useContext(TapFilterContext);
 
   const { namespaces } = useNamespaces();
   const { workloads } = useWorkloads(namespacesFilter.get);
-  const { accessLogs, error, isStreaming, filters, setFilters } = useAccessLogsSubscription();
+  const { accessLogs, error, filters, setFilters } = useAccessLogsSubscription();
 
   const setAccessLogForDetails = useCallback(
     (accessLog: HTTPAccessLogEntryM) => {
@@ -30,8 +30,8 @@ const Tap = () => {
   );
 
   const toggleStreaming = useCallback(() => {
-    isStreaming.current = !isStreaming.current;
-  }, [isStreaming]);
+    streaming.set(!streaming.get);
+  }, [streaming]);
 
   return (
     <StyledTap idDetailsShown={!!accessLogForDetails}>
@@ -40,7 +40,7 @@ const Tap = () => {
       </div>
       <div className="button-container">
         <Button variant="contained" color="primary" onClick={toggleStreaming}>
-          {isStreaming.current ? "❚❚" : "▶"}
+          {streaming.get ? "❚❚" : "▶"}
         </Button>
       </div>
       <div className="table-container">

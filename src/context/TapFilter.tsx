@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 export type TapFilterContextType = {
+  streaming: { get: boolean; set: React.Dispatch<React.SetStateAction<boolean>> };
   namespacesFilter: { get: string[]; set: React.Dispatch<React.SetStateAction<string[]>> };
   resourceFilter: { get: string; set: React.Dispatch<React.SetStateAction<string>> };
   destinationFilter: { get: string; set: React.Dispatch<React.SetStateAction<string>> };
@@ -16,6 +17,7 @@ export const BACKYARDS_DEMO_NAMESPACE_OPTION = { label: "backyards-demo", value:
 export const TapFilterContext = React.createContext<TapFilterContextType>({} as TapFilterContextType);
 
 export const TapFilterContextProvider = (props: ContextProviderProps) => {
+  const [isStreaming, setStreaming] = useState(false);
   const [namespacesFilter, setNamespacesFilter] = useState<string[]>([
     DEFAULT_NAMESPACE_OPTION.value,
     BACKYARDS_DEMO_NAMESPACE_OPTION.value,
@@ -30,6 +32,7 @@ export const TapFilterContextProvider = (props: ContextProviderProps) => {
   return (
     <TapFilterContext.Provider
       value={{
+        streaming: { get: isStreaming, set: setStreaming },
         namespacesFilter: { get: namespacesFilter, set: setNamespacesFilter },
         resourceFilter: { get: resourceFilter, set: setResourceFilter },
         destinationFilter: { get: destinationFilter, set: setDestinationFilter },

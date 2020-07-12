@@ -3,6 +3,7 @@ import { useCallback, useContext } from "react";
 
 const useFilters = (filters: AccessLogsInput, setFilters: (accessLogsInput: AccessLogsInput) => void) => {
   const {
+    streaming,
     namespacesFilter,
     resourceFilter,
     destinationFilter,
@@ -32,6 +33,7 @@ const useFilters = (filters: AccessLogsInput, setFilters: (accessLogsInput: Acce
         delete newFilter.reporterType;
         delete newFilter.reporterName;
         setFilters(newFilter);
+        streaming.set(false);
         return;
       }
       const [namespace, workload] = value.split("/");
@@ -40,6 +42,7 @@ const useFilters = (filters: AccessLogsInput, setFilters: (accessLogsInput: Acce
         delete newFilterWithNs.reporterType;
         delete newFilterWithNs.reporterName;
         setFilters(newFilterWithNs);
+        streaming.set(true);
         return;
       }
       const newFilterWithNsAndW: AccessLogsInput = {
@@ -48,8 +51,9 @@ const useFilters = (filters: AccessLogsInput, setFilters: (accessLogsInput: Acce
         reporterName: workload,
       };
       setFilters(newFilterWithNsAndW);
+      streaming.set(true);
     },
-    [setFilters, filters, resourceFilter],
+    [setFilters, streaming, filters, resourceFilter],
   );
 
   const setDestination = useCallback(
@@ -63,6 +67,7 @@ const useFilters = (filters: AccessLogsInput, setFilters: (accessLogsInput: Acce
         delete newFilter.destinationType;
         delete newFilter.destinationName;
         setFilters(newFilter);
+        streaming.set(true);
         return;
       }
       const [namespace, workload] = value.split("/");
@@ -79,8 +84,9 @@ const useFilters = (filters: AccessLogsInput, setFilters: (accessLogsInput: Acce
         destinationName: workload,
       };
       setFilters(newFilterWithNsAndW);
+      streaming.set(true);
     },
-    [setFilters, filters, destinationFilter],
+    [setFilters, streaming, filters, destinationFilter],
   );
   const setMethod = useCallback(
     (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -94,8 +100,9 @@ const useFilters = (filters: AccessLogsInput, setFilters: (accessLogsInput: Acce
         delete newFilter.method;
         setFilters(newFilter);
       }
+      streaming.set(true);
     },
-    [setFilters, filters, methodFilter],
+    [setFilters, streaming, filters, methodFilter],
   );
   const setStatusCodeMin = useCallback(
     (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -114,8 +121,9 @@ const useFilters = (filters: AccessLogsInput, setFilters: (accessLogsInput: Acce
           setFilters({ ...newFilter, statusCode: { ...statusCode } });
         }
       }
+      streaming.set(true);
     },
-    [setFilters, filters, statusCodeMinFilter],
+    [setFilters, streaming, filters, statusCodeMinFilter],
   );
   const setStatusCodeMax = useCallback(
     (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -134,8 +142,9 @@ const useFilters = (filters: AccessLogsInput, setFilters: (accessLogsInput: Acce
           setFilters({ ...newFilter, statusCode: { ...statusCode } });
         }
       }
+      streaming.set(true);
     },
-    [setFilters, filters, statusCodeMaxFilter],
+    [setFilters, streaming, filters, statusCodeMaxFilter],
   );
   const setPathPrefix = useCallback(
     (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -149,8 +158,9 @@ const useFilters = (filters: AccessLogsInput, setFilters: (accessLogsInput: Acce
         delete newFilter.path;
         setFilters(newFilter);
       }
+      streaming.set(true);
     },
-    [setFilters, filters, pathPrefixFilter],
+    [setFilters, streaming, filters, pathPrefixFilter],
   );
 
   return {
