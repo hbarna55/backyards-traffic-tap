@@ -2,7 +2,7 @@ import { QueryLazyOptions } from "@apollo/react-hooks";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { ApolloError } from "apollo-boost";
-import Error from "components/StyledElements/Error/Error";
+import Alert from "components/StyledElements/Alert/Alert";
 import { GRAPHQL_API_ENDPOINT, TOKEN_KEY } from "config";
 import React, { useCallback, useMemo, useState } from "react";
 import cookie from "utils/Cookie";
@@ -30,7 +30,7 @@ const Authentication = ({ testLogin, error, loading, wasLoginAttempt, setLoginAt
     cookie.save(TOKEN_KEY, token, GRAPHQL_API_ENDPOINT);
     testLogin();
     setLoginAttempt(true);
-  }, [token, testLogin, setLoginAttempt]);
+  }, [token, testLogin, setLoginAttempt, tokenValidator]);
 
   return (
     <Style>
@@ -53,7 +53,11 @@ const Authentication = ({ testLogin, error, loading, wasLoginAttempt, setLoginAt
           </Button>
         </form>
       </div>
-      {error && wasLoginAttempt && <Error>{error.message}</Error>}
+      {error && wasLoginAttempt && (
+        <Alert severity="error" variant="filled">
+          {error.message}
+        </Alert>
+      )}
     </Style>
   );
 };
